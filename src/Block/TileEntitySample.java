@@ -61,7 +61,7 @@ public class TileEntitySample extends TileEntity
         if(stack != null) {
             if(index == 0) {
                 ItemStack ret = this.stack.copy();
-                ret.stackSize = 0;
+                ret.stackSize = 1;
                 return  ret;
             }
             if(index == 2) {
