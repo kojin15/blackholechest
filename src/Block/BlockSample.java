@@ -1,4 +1,4 @@
-package kojin15.Block;
+package kojin15.src.Block;
 
 import net.minecraft.src.*;
 import net.minecraft.src.BlockContainer;

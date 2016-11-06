@@ -1,7 +1,7 @@
-package kojin15;
+package kojin15.src;
 
-import kojin15.Block.BlockSample;
-import kojin15.Block.TileEntitySample;
+import kojin15.src.Block.BlockSample;
+import kojin15.src.Block.TileEntitySample;
 import net.minecraft.src.*;
 import net.minecraft.src.forge.*;
 import net.minecraft.src.ItemStack;
@@ -10,7 +10,7 @@ public class mod_sample extends BaseMod {
 
     public static Block SampleBlockChest;
     public int SampleblockID = 2000;
-    public static String texture = "/texture.png";
+    public static String texture = "/kojin15/resourse/texture.png";
 
     public mod_sample()
     {
