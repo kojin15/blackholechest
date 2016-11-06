@@ -16,9 +16,9 @@ public class ContainerSample extends Container {
     static final int inventorySize = 27;
     static final int hotbarSize = 9;
 
-    static final int inputslotIndex = 0;
-    static final int outputslotIndex = inputslotIndex + inputslotSize;
-    static final int displayslotIndex = outputslotIndex + outputslotSize;
+    static final int outputslotIndex = 0;
+    static final int inputslotIndex = outputslotIndex + outputslotSize;
+    static final int displayslotIndex = inputslotIndex + inputslotSize;
     static final int inventoryIndex = displayslotIndex + displayslotSize;
     static final int hotbarIndex = inventoryIndex + inventorySize;
 
@@ -27,9 +27,9 @@ public class ContainerSample extends Container {
         chest.setContainer(this);
         this.playerInventry = (InventoryPlayer) plaInv;
 
-        this.addSlot(new SlotSample(chest, 0, 8, 38, true, false));
-        this.addSlot(new SlotSample(chest, 1, 44, 38, false, true));
-        this.addSlot(new SlotSample(chest, 2, 124, 35, false, false));
+        this.addSlot(new SlotSample(chest , 2, 44, 38,false,true));
+        this.addSlot(new SlotSample(chest , 1, 8, 38,true,false));
+        this.addSlot(new SlotSample(chest , 0, 124,35,false,false));
         int var3;
 
         for (var3 = 0; var3 < 3; ++var3) {
@@ -62,11 +62,13 @@ public class ContainerSample extends Container {
     {
         ItemStack var2 = null;
         Slot var3 = (Slot)this.inventorySlots.get(par1);
+        ItemStack item = this.chest.getStackInSlot(0);
 
         if (var3 != null && var3.getHasStack())
         {
             ItemStack var4 = var3.getStack();
             var2 = var4.copy();
+
 
             if (par1 == inputslotIndex && par1 == outputslotIndex)
             {
@@ -75,12 +77,11 @@ public class ContainerSample extends Container {
                     return null;
                 }
 
-                var3.func_48433_a(var4, var2);
             }
 
             else if (par1 != inputslotIndex && par1 != outputslotIndex && par1 != displayslotIndex) {
                 if (var4 != null) {
-                    if (!this.mergeItemStack(var4, inputslotIndex, inputslotSize, false)) {
+                    if (!this.mergeItemStack(var4, inputslotIndex, inputslotIndex + inputslotSize, false)) {
                         return null;
                     }
                 }
