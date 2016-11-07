@@ -53,7 +53,7 @@ public class TileEntitySample extends TileEntity
     @Override
     public int getSizeInventory()
     {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -61,13 +61,13 @@ public class TileEntitySample extends TileEntity
         if(stack != null) {
             if(index == 0) {
                 ItemStack ret = this.stack.copy();
-                ret.stackSize = 1;
-                return  ret;
+                ret.stackSize = 0;
+                return ret;
             }
             if(index == 2) {
                 return this.stack;
             }
-            if(index ==1 && this.MAXSIZE == this.size) {
+            if(index == 1 && this.MAXSIZE == this.size) {
                 return this.stack;
             }
         }
@@ -78,7 +78,7 @@ public class TileEntitySample extends TileEntity
 
     @Override
     public ItemStack decrStackSize(int index, int dec) {
-        System.out.println("TileEntitytSample.decrStackSize(int " +index+",int "+dec+")");
+        System.out.println("AlotmoreChestTile.decrStackSize(int " +index+",int "+dec+")");
         if(index == 2) {
             if(this.stack.stackSize >= dec && this.size > 64) {
                 ItemStack ret = this.stack.copy();
@@ -124,11 +124,11 @@ public class TileEntitySample extends TileEntity
                 if(this.size <=64) {
                     this.stack.stackSize = (int)this.size;
                 }
-
+                else if(this.size > 64){
+                    this.stack.stackSize = 64;
+                }
             }
-
         }
-
     }
 
     public long getMaxSize()
