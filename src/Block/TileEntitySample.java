@@ -1,9 +1,10 @@
 package kojin15.src.Block;
 
 import net.minecraft.src.*;
+import net.minecraft.src.forge.ISidedInventory;
 
 public class TileEntitySample extends TileEntity
-        implements IInventory
+        implements IInventory, ISidedInventory
 {
     private ContainerSample container;
 
@@ -17,6 +18,8 @@ public class TileEntitySample extends TileEntity
     public void setContainer(ContainerSample container) {
         this.container = container;
     }
+
+
 
     @Override
     public void readFromNBT(NBTTagCompound par1NBTTagCompound) {
@@ -61,7 +64,7 @@ public class TileEntitySample extends TileEntity
         if(stack != null) {
             if(index == 0) {
                 ItemStack ret = this.stack.copy();
-                ret.stackSize = 0;
+                ret.stackSize = 1;
                 return ret;
             }
             if(index == 2) {
@@ -167,4 +170,14 @@ public class TileEntitySample extends TileEntity
         return true;
     }
 
+
+    @Override
+    public int getStartInventorySide(int side) {
+        return 1;
+    }
+
+    @Override
+    public int getSizeInventorySide(int side) {
+        return side ==1 ? 1 : 2;
+    }
 }
