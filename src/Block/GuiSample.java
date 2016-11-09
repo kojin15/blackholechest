@@ -28,7 +28,7 @@ public class GuiSample extends GuiContainer
         super.fontRenderer.drawString(st.translateKey(player.getInvName()), 8, 72, 0x404040);
         String text = (this.tile).getSize()+": Items";
         this.fontRenderer.drawString(text, this.xSize-(35+((text.length()-7)*6)), 60, 4210752);
-        ItemStack item = this.tile.getStackInSlot(0);
+        ItemStack item = this.tile.getStackInSlot(1);
         if(item != null) {
             String name = item.getItem().getItemDisplayName(item);
             super.fontRenderer.drawString(name, 50, 20, 4210752);

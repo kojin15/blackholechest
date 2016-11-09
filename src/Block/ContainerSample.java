@@ -16,9 +16,9 @@ public class ContainerSample extends Container {
     static final int inventorySize = 27;
     static final int hotbarSize = 9;
 
-    static final int outputslotIndex = 0;
-    static final int inputslotIndex = outputslotIndex + outputslotSize;
-    static final int displayslotIndex = inputslotIndex + inputslotSize;
+    static final int inputslotIndex = 0;
+    static final int outputslotIndex = inputslotIndex + inputslotSize;
+    static final int displayslotIndex = outputslotIndex + outputslotSize;
     static final int inventoryIndex = displayslotIndex + displayslotSize;
     static final int hotbarIndex = inventoryIndex + inventorySize;
 
@@ -27,8 +27,8 @@ public class ContainerSample extends Container {
         chest.setContainer(this);
         this.playerInventry = (InventoryPlayer) plaInv;
 
-        this.addSlot(new SlotSample(chest , 2, 44, 38,false,true));
         this.addSlot(new SlotSample(chest , 1, 8, 38,true,false));
+        this.addSlot(new SlotSample(chest , 2, 44, 38,false,true));
         this.addSlot(new SlotSample(chest , 0, 124,35,false,false));
         int var3;
 
@@ -60,21 +60,32 @@ public class ContainerSample extends Container {
 
     public ItemStack transferStackInSlot(int par1)
     {
+        System.out.println("SlotIndex:"+par1);
         ItemStack var2 = null;
         Slot var3 = (Slot)this.inventorySlots.get(par1);
-        ItemStack item = this.chest.getStackInSlot(0);
+        long size = chest.getSize();
 
         if (var3 != null && var3.getHasStack())
         {
             ItemStack var4 = var3.getStack();
             var2 = var4.copy();
+            long outstack = (int)var4.stackSize;
 
-
-            if (par1 == inputslotIndex && par1 == outputslotIndex)
+            if (par1 == inputslotIndex)
             {
-                if (!this.mergeItemStack(var4, inventoryIndex, hotbarIndex + hotbarSize, true))
-                {
                     return null;
+            }
+
+            else if (par1 == outputslotIndex){
+                if (size >= 64){
+                    if (!this.mergeItemStack(var4, inventoryIndex, hotbarIndex + hotbarSize, true)) {
+                        chest.setSize(size -= 64);
+                    }
+                }
+                else if (size < 64){
+                    if (!this.mergeItemStack(var4, inventoryIndex, hotbarIndex + hotbarSize, true)) {
+                        chest.setSize(0);
+                    }
                 }
 
             }
@@ -87,16 +98,16 @@ public class ContainerSample extends Container {
                 }
             }
             else if (par1 >= inventoryIndex && par1 < hotbarIndex)
-                {
-                    if (!this.mergeItemStack(var4, hotbarIndex, hotbarIndex + hotbarSize, false))
-                    {
-                        return null;
-                    }
-                }
-            else if (par1 >= hotbarIndex && par1 < hotbarIndex +hotbarSize && !this.mergeItemStack(var4, inventoryIndex, hotbarIndex, false))
+            {
+                if (!this.mergeItemStack(var4, hotbarIndex, hotbarIndex + hotbarSize, false))
                 {
                     return null;
                 }
+            }
+            else if (par1 >= hotbarIndex && par1 < hotbarIndex +hotbarSize && !this.mergeItemStack(var4, inventoryIndex, hotbarIndex, false))
+            {
+                return null;
+            }
             else if (par1 == displayslotIndex)
             {
                 return null;

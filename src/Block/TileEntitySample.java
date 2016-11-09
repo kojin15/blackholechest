@@ -19,8 +19,6 @@ public class TileEntitySample extends TileEntity
         this.container = container;
     }
 
-
-
     @Override
     public void readFromNBT(NBTTagCompound par1NBTTagCompound) {
         super.readFromNBT(par1NBTTagCompound);
@@ -74,9 +72,7 @@ public class TileEntitySample extends TileEntity
                 return this.stack;
             }
         }
-
         return null;
-
     }
 
     @Override
@@ -131,7 +127,26 @@ public class TileEntitySample extends TileEntity
                     this.stack.stackSize = 64;
                 }
             }
+
         }
+    }
+
+    public void updateEntity() {
+        long contsize = this.getSize();
+        if (this.size >= 64){
+            if(this.stack.stackSize == 0){
+                this.stack.stackSize = 64;
+            }
+        }
+        else if (this.size < 64 && this.size > 0){
+            if(this.stack.stackSize == 0){
+                this.stack.stackSize = (int)this.size;
+            }
+        }
+        else if (this.size == 0){
+            this.stack = null;
+        }
+
     }
 
     public long getMaxSize()
@@ -170,14 +185,17 @@ public class TileEntitySample extends TileEntity
         return true;
     }
 
-
-    @Override
-    public int getStartInventorySide(int side) {
+    public int getStartInventorySide(int side)
+    {
         return 1;
     }
 
-    @Override
-    public int getSizeInventorySide(int side) {
-        return side ==1 ? 1 : 2;
+    public int getSizeInventorySide(int side)
+    {
+        return side == 1 ? 1 : 2;
     }
+
+
+
+
 }
