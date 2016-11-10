@@ -24,6 +24,8 @@ public class GuiSample extends GuiContainer
 
     protected void drawGuiContainerForegroundLayer() {
         StringTranslate st = StringTranslate.getInstance();
+        super.fontRenderer.drawString("IN", 11, 28, 0x000000);
+        super.fontRenderer.drawString("OUT", 44, 28, 0x000000);
         super.fontRenderer.drawString(st.translateKey(tile.getInvName()), 8, 5, 0x404040);
         super.fontRenderer.drawString(st.translateKey(player.getInvName()), 8, 72, 0x404040);
         String text = (this.tile).getSize()+": Items";
