@@ -1,6 +1,7 @@
 package kojin15.src.Block;
 
 import net.minecraft.src.*;
+import net.minecraft.src.buildcraft.api.Orientations;
 import net.minecraft.src.forge.ISidedInventory;
 
 public class TileEntitySample extends TileEntity
@@ -65,10 +66,10 @@ public class TileEntitySample extends TileEntity
                 ret.stackSize = 1;
                 return ret;
             }
-            if(index == 2) {
+            if(index == 1) {
                 return this.stack;
             }
-            if(index == 1 && this.MAXSIZE == this.size) {
+            if(index == 2 && this.MAXSIZE == this.size) {
                 return this.stack;
             }
         }
@@ -78,7 +79,7 @@ public class TileEntitySample extends TileEntity
     @Override
     public ItemStack decrStackSize(int index, int dec) {
         System.out.println("AlotmoreChestTile.decrStackSize(int " +index+",int "+dec+")");
-        if(index == 2) {
+        if(index == 1) {
             if(this.stack.stackSize >= dec && this.size > 64) {
                 ItemStack ret = this.stack.copy();
                 ret.stackSize = dec;
@@ -112,7 +113,7 @@ public class TileEntitySample extends TileEntity
     @Override
     public void setInventorySlotContents(int index, ItemStack stack) {
         System.out.println("TileEntitySample.setInventorySlotContents(int "+index+",item "+ stack+")");
-        if(index == 1 && stack != null) {
+        if(index == 2 && stack != null) {
             if(this.stack == null) {
                 this.stack = stack;
                 this.size = stack.stackSize;
@@ -132,7 +133,6 @@ public class TileEntitySample extends TileEntity
     }
 
     public void updateEntity() {
-        long contsize = this.getSize();
         if (this.size >= 64){
             if(this.stack.stackSize == 0){
                 this.stack.stackSize = 64;
@@ -142,12 +142,16 @@ public class TileEntitySample extends TileEntity
             if(this.stack.stackSize == 0){
                 this.stack.stackSize = (int)this.size;
             }
+            if(this.size != this.stack.stackSize){
+                this.size = this.stack.stackSize;
+            }
         }
         else if (this.size == 0){
             this.stack = null;
         }
 
     }
+
 
     public long getMaxSize()
     {
@@ -181,10 +185,6 @@ public class TileEntitySample extends TileEntity
 
     }
 
-    public boolean isUseableByPlayer(int p_94041_1_, ItemStack p_94041_2_) {
-        return true;
-    }
-
     public int getStartInventorySide(int side)
     {
         return 1;
@@ -192,10 +192,8 @@ public class TileEntitySample extends TileEntity
 
     public int getSizeInventorySide(int side)
     {
-        return side == 1 ? 1 : 2;
+        if (this.size == Long.MAX_VALUE){ return 1; }
+        else { return 2; }
     }
-
-
-
 
 }

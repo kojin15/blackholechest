@@ -16,19 +16,19 @@ public class ContainerSample extends Container {
     static final int inventorySize = 27;
     static final int hotbarSize = 9;
 
-    static final int inputslotIndex = 0;
-    static final int outputslotIndex = inputslotIndex + inputslotSize;
-    static final int displayslotIndex = outputslotIndex + outputslotSize;
-    static final int inventoryIndex = displayslotIndex + displayslotSize;
-    static final int hotbarIndex = inventoryIndex + inventorySize;
+    static final int outputslotIndex = 0;
+    static final int inputslotIndex = 1;
+    static final int displayslotIndex = 2;
+    static final int inventoryIndex = 3;
+    static final int hotbarIndex = 30;
 
     public ContainerSample(IInventory plaInv, IInventory tileInv) {
         this.chest = (TileEntitySample) tileInv;
         chest.setContainer(this);
         this.playerInventry = (InventoryPlayer) plaInv;
 
-        this.addSlot(new SlotSample(chest , 1, 8, 38,true,false));
-        this.addSlot(new SlotSample(chest , 2, 44, 38,false,true));
+        this.addSlot(new SlotSample(chest , 1, 44, 38,false,true));
+        this.addSlot(new SlotSample(chest , 2, 8, 38,true,false));
         this.addSlot(new SlotSample(chest , 0, 124,35,false,false));
         int var3;
 
@@ -63,37 +63,57 @@ public class ContainerSample extends Container {
         System.out.println("SlotIndex:"+par1);
         ItemStack var2 = null;
         Slot var3 = (Slot)this.inventorySlots.get(par1);
-        long size = chest.getSize();
+
+
 
         if (var3 != null && var3.getHasStack())
         {
             ItemStack var4 = var3.getStack();
             var2 = var4.copy();
-            long outstack = (int)var4.stackSize;
 
-            if (par1 == inputslotIndex)
-            {
-                    return null;
-            }
 
-            else if (par1 == outputslotIndex){
-                if (size >= 64){
-                    if (!this.mergeItemStack(var4, inventoryIndex, hotbarIndex + hotbarSize, true)) {
-                        chest.setSize(size -= 64);
+
+            if (par1 == outputslotIndex){
+
+                if (chest.getSize() >= 64){
+
+                    if (!this.mergeItemStack(var4, inventoryIndex, hotbarIndex + hotbarSize, false)) {
+                        return null;
                     }
+                    chest.setSize(chest.getSize() - 64);
                 }
-                else if (size < 64){
-                    if (!this.mergeItemStack(var4, inventoryIndex, hotbarIndex + hotbarSize, true)) {
-                        chest.setSize(0);
+                else if (chest.getSize() < 63){
+
+                    if (!this.mergeItemStack(var4, inventoryIndex, hotbarIndex + hotbarSize, false)) {
+                        return null;
                     }
+                    chest.setSize(0);
                 }
+
 
             }
 
             else if (par1 != inputslotIndex && par1 != outputslotIndex && par1 != displayslotIndex) {
                 if (var4 != null) {
-                    if (!this.mergeItemStack(var4, inputslotIndex, inputslotIndex + inputslotSize, false)) {
-                        return null;
+                    if (chest.getMaxSize() - chest.getSize() < (long)var4.stackSize) {
+                        long var5 = chest.getMaxSize() - chest.getSize();
+                        ItemStack var6 = var4.copy();
+                        ItemStack var7 = var4.copy();
+                        var6.stackSize = (int) var5;
+                        var7.stackSize = var4.stackSize - (int) var5;
+
+                        if (!this.mergeItemStack(var6, inputslotIndex, inputslotIndex + inputslotSize, false)) {
+                            return null;
+                        }
+                        var3.putStack(var7);
+
+                    } else {
+                        if (var4 != null) {
+                            if (!this.mergeItemStack(var4, inputslotIndex, inputslotIndex + inputslotSize, false)) {
+                                return null;
+                            }
+
+                        }
                     }
                 }
             }
@@ -114,10 +134,10 @@ public class ContainerSample extends Container {
             }
 
 
-            else if (!this.mergeItemStack(var4, 3, 39, false))
-            {
-                return null;
-            }
+            //else if (!this.mergeItemStack(var4, 3, 39, false))
+            //{
+                //return null;
+            //}
 
             if (var4.stackSize == 0)
             {
@@ -138,6 +158,8 @@ public class ContainerSample extends Container {
 
         return var2;
     }
+
+
 }
 
 class SlotSample extends Slot {
@@ -163,6 +185,12 @@ class SlotSample extends Slot {
         }
 
         return false;
+    }
+
+    public int getSlotStackLimit() {
+        TileEntitySample tile = (TileEntitySample) this.inventory;
+        long limit = tile.getMaxSize() - tile.getSize();
+        return limit < 64 ? (int)limit : 64;
     }
 
 }
