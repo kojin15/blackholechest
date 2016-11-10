@@ -16,8 +16,8 @@ public class ContainerSample extends Container {
     static final int inventorySize = 27;
     static final int hotbarSize = 9;
 
-    static final int outputslotIndex = 0;
-    static final int inputslotIndex = 1;
+    static final int inputslotIndex = 0;
+    static final int outputslotIndex = 1;
     static final int displayslotIndex = 2;
     static final int inventoryIndex = 3;
     static final int hotbarIndex = 30;
@@ -27,8 +27,8 @@ public class ContainerSample extends Container {
         chest.setContainer(this);
         this.playerInventry = (InventoryPlayer) plaInv;
 
-        this.addSlot(new SlotSample(chest , 1, 44, 38,false,true));
-        this.addSlot(new SlotSample(chest , 2, 8, 38,true,false));
+        this.addSlot(new SlotSample(chest , 1, 8, 38,true,false));
+        this.addSlot(new SlotSample(chest , 2, 44, 38,false,true));
         this.addSlot(new SlotSample(chest , 0, 124,35,false,false));
         int var3;
 
@@ -60,7 +60,6 @@ public class ContainerSample extends Container {
 
     public ItemStack transferStackInSlot(int par1)
     {
-        System.out.println("SlotIndex:"+par1);
         ItemStack var2 = null;
         Slot var3 = (Slot)this.inventorySlots.get(par1);
 
@@ -132,12 +131,6 @@ public class ContainerSample extends Container {
             {
                 return null;
             }
-
-
-            //else if (!this.mergeItemStack(var4, 3, 39, false))
-            //{
-                //return null;
-            //}
 
             if (var4.stackSize == 0)
             {
