@@ -1,12 +1,10 @@
 package kojin15.src.Block;
 
 import net.minecraft.src.*;
-import net.minecraft.src.buildcraft.api.Orientations;
 import net.minecraft.src.forge.ISidedInventory;
 
-public class TileEntitySample extends TileEntity
-        implements IInventory, ISidedInventory
-{
+public class TileEntitySample extends TileEntity implements IInventory, ISidedInventory {
+
     private ContainerSample container;
 
     private long MAXSIZE =Long.MAX_VALUE;
@@ -20,7 +18,6 @@ public class TileEntitySample extends TileEntity
         this.container = container;
     }
 
-    @Override
     public void readFromNBT(NBTTagCompound par1NBTTagCompound) {
         super.readFromNBT(par1NBTTagCompound);
         this.size = par1NBTTagCompound.getLong("Size");
@@ -28,7 +25,6 @@ public class TileEntitySample extends TileEntity
         this.stack = ItemStack.loadItemStackFromNBT(compound);
     }
 
-    @Override
     public void writeToNBT(NBTTagCompound par1NBTTagCompound) {
         super.writeToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setLong("Size", this.size);
@@ -52,13 +48,11 @@ public class TileEntitySample extends TileEntity
         return this.worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
     }
 
-    @Override
     public int getSizeInventory()
     {
         return 3;
     }
 
-    @Override
     public ItemStack getStackInSlot(int index) {
         if(stack != null) {
             if(index == 0) {
@@ -70,13 +64,12 @@ public class TileEntitySample extends TileEntity
                 return this.stack;
             }
             if(index == 1 && this.MAXSIZE == this.size) {
-                return this.stack;
+                return null;
             }
         }
         return null;
     }
 
-    @Override
     public ItemStack decrStackSize(int index, int dec) {
         if(index == 2) {
             if(this.stack.stackSize >= dec && this.size > 64) {
@@ -103,19 +96,17 @@ public class TileEntitySample extends TileEntity
         return null;
     }
 
-    @Override
     public ItemStack getStackInSlotOnClosing(int par4) {
         return null;
     }
 
-    @Override
     public void setInventorySlotContents(int index, ItemStack stack) {
         if(index == 1 && stack != null) {
             if(this.stack == null) {
                 this.stack = stack;
                 this.size = stack.stackSize;
-
-            }else if(this.stack.isItemEqual(stack) && this.MAXSIZE - this.size > 0) {
+            }
+            else if(this.stack.isItemEqual(stack) && this.MAXSIZE - this.size > 0) {
                 this.size += stack.stackSize;
                 if(this.size < 0) this.size = this.MAXSIZE;
                 if(this.size <=64) {
@@ -125,7 +116,6 @@ public class TileEntitySample extends TileEntity
                     this.stack.stackSize = 64;
                 }
             }
-
         }
     }
 
@@ -146,38 +136,31 @@ public class TileEntitySample extends TileEntity
         else if (this.size == 0){
             this.stack = null;
         }
-
     }
-
 
     public long getMaxSize()
     {
         return MAXSIZE;
     }
 
-    @Override
     public String getInvName() {
         return "container.samplechest";
     }
 
-    @Override
     public int getInventoryStackLimit()
     {
         return  64;
     }
 
-    @Override
     public boolean isUseableByPlayer(EntityPlayer p_70300_1_)
     {
         return true;
     }
 
-    @Override
     public void openChest() {
 
     }
 
-    @Override
     public void closeChest() {
 
     }

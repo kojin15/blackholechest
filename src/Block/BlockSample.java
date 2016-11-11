@@ -6,46 +6,36 @@ import net.minecraft.src.BlockContainer;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BlockSample extends BlockContainer
-{
+public class BlockSample extends BlockContainer {
+
     private boolean blockType;
 
-    public int getBlockTextureFromSideAndMetadata(int par1, int par2)
-    {
-        if (par1 == 1)
-        {
+    public int getBlockTextureFromSideAndMetadata(int par1, int par2) {
+        if (par1 == 1) {
             return this.blockIndexInTexture;
         }
-        else if (par1 == 0)
-        {
+        else if (par1 == 0) {
             return this.blockIndexInTexture;
         }
-        else
-        {
+        else {
             int var3 = this.blockIndexInTexture + 1 + 16;
-
-            if (this.blockType)
-            {
+            if (this.blockType) {
                 ++var3;
             }
-
             return par2 == 2 && par1 == 2 ? var3 : (par2 == 3 && par1 == 5 ? var3 : (par2 == 0 && par1 == 3 ? var3 : (par2 == 1 && par1 == 4 ? var3 : this.blockIndexInTexture + 16)));
         }
     }
 
-    public int getBlockTextureFromSide(int par1)
-    {
+    public int getBlockTextureFromSide(int par1) {
         return par1 == 1 ? this.blockIndexInTexture : (par1 == 0 ? this.blockIndexInTexture : (par1 == 3 ? this.blockIndexInTexture + 1 + 16 : this.blockIndexInTexture + 16));
     }
 
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving)
-    {
+    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving) {
         int var6 = MathHelper.floor_double((double)(par5EntityLiving.rotationYaw * 4.0F / 360.0F) + 2.5D) & 3;
         par1World.setBlockMetadataWithNotify(par2, par3, par4, var6);
     }
 
-    public BlockSample(int par1, int par2, boolean par3)
-    {
+    public BlockSample(int par1, int par2, boolean par3) {
         super(par1, 0, Material.glass);
         Block.useNeighborBrightness[par1] = true;
         this.blockIndexInTexture = par2;
@@ -62,8 +52,7 @@ public class BlockSample extends BlockContainer
         return this.blockID;
     }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z)
-    {
+    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
         float p0 = 0.01F;
         float ps = 0.0625F;
         float pe = 0.9375F;
@@ -95,8 +84,7 @@ public class BlockSample extends BlockContainer
 
     public float getBlockBrightness(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {return 10.0F; }
 
-    public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer)
-    {
+    public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer) {
         TileEntitySample abc = (TileEntitySample) world.getBlockTileEntity(i, j, k);
         if(abc == null)
         {
@@ -108,7 +96,6 @@ public class BlockSample extends BlockContainer
         }
     }
 
-    @Override
     public void addCreativeItems(ArrayList itemList)
     {
         itemList.add(new ItemStack(this));

@@ -58,19 +58,17 @@ public class ContainerSample extends Container {
     }
 
 
-    public ItemStack transferStackInSlot(int par1)
-    {
+    public ItemStack transferStackInSlot(int par1) {
         ItemStack var2 = null;
         Slot var3 = (Slot)this.inventorySlots.get(par1);
+        Slot dis = (Slot)this.inventorySlots.get(displayslotIndex);
+        ItemStack disItem = dis.getStack();
 
 
 
-        if (var3 != null && var3.getHasStack())
-        {
+        if (var3 != null && var3.getHasStack()) {
             ItemStack var4 = var3.getStack();
             var2 = var4.copy();
-
-
 
             if (par1 == outputslotIndex){
 
@@ -88,71 +86,63 @@ public class ContainerSample extends Container {
                     }
                     chest.setSize(0);
                 }
-
-
             }
 
             else if (par1 != inputslotIndex && par1 != outputslotIndex && par1 != displayslotIndex) {
                 if (var4 != null) {
-                    if (chest.getMaxSize() - chest.getSize() < (long)var4.stackSize) {
-                        long var5 = chest.getMaxSize() - chest.getSize();
-                        ItemStack var6 = var4.copy();
-                        ItemStack var7 = var4.copy();
-                        var6.stackSize = (int) var5;
-                        var7.stackSize = var4.stackSize - (int) var5;
-
-                        if (!this.mergeItemStack(var6, inputslotIndex, inputslotIndex + inputslotSize, false)) {
-                            return null;
+                    if (chest.getSize() == 0){
+                        if (!this.mergeItemStack(var4, inputslotIndex, inputslotIndex + inputslotSize, false)) {
+                                return null;
                         }
-                        var3.putStack(var7);
+                    }
+                    else if (var4.isItemEqual(disItem)){
+                        if (chest.getMaxSize() - chest.getSize() < (long)var4.stackSize) {
+                            long var5 = chest.getMaxSize() - chest.getSize();
+                            ItemStack var6 = var4.copy();
+                            ItemStack var7 = var4.copy();
+                            var6.stackSize = (int) var5;
+                            var7.stackSize = var4.stackSize - (int) var5;
 
-                    } else {
-                        if (var4 != null) {
+                            if (!this.mergeItemStack(var6, inputslotIndex, inputslotIndex + inputslotSize, false)) {
+                                return null;
+                            }
+                            var3.putStack(var7);
+                        }
+                        else {
                             if (!this.mergeItemStack(var4, inputslotIndex, inputslotIndex + inputslotSize, false)) {
                                 return null;
                             }
-
                         }
                     }
                 }
             }
-            else if (par1 >= inventoryIndex && par1 < hotbarIndex)
-            {
+            else if (par1 >= inventoryIndex && par1 < hotbarIndex) {
                 if (!this.mergeItemStack(var4, hotbarIndex, hotbarIndex + hotbarSize, false))
                 {
                     return null;
                 }
             }
-            else if (par1 >= hotbarIndex && par1 < hotbarIndex +hotbarSize && !this.mergeItemStack(var4, inventoryIndex, hotbarIndex, false))
-            {
+            else if (par1 >= hotbarIndex && par1 < hotbarIndex +hotbarSize && !this.mergeItemStack(var4, inventoryIndex, hotbarIndex, false)) {
                 return null;
             }
-            else if (par1 == displayslotIndex)
-            {
+            else if (par1 == displayslotIndex) {
                 return null;
             }
 
-            if (var4.stackSize == 0)
-            {
+            if (var4.stackSize == 0) {
                 var3.putStack((ItemStack)null);
             }
-            else
-            {
+            else {
                 var3.onSlotChanged();
             }
 
-            if (var4.stackSize == var2.stackSize)
-            {
+            if (var4.stackSize == var2.stackSize) {
                 return null;
             }
-
             var3.onPickupFromSlot(var4);
         }
-
         return var2;
     }
-
-
 }
 
 class SlotSample extends Slot {
