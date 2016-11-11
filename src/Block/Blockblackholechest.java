@@ -6,7 +6,7 @@ import net.minecraft.src.BlockContainer;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BlockSample extends BlockContainer {
+public class Blockblackholechest extends BlockContainer {
 
     private boolean blockType;
 
@@ -35,7 +35,7 @@ public class BlockSample extends BlockContainer {
         par1World.setBlockMetadataWithNotify(par2, par3, par4, var6);
     }
 
-    public BlockSample(int par1, int par2, boolean par3) {
+    public Blockblackholechest(int par1, int par2, boolean par3) {
         super(par1, 0, Material.glass);
         Block.useNeighborBrightness[par1] = true;
         this.blockIndexInTexture = par2;
@@ -44,7 +44,7 @@ public class BlockSample extends BlockContainer {
 
     public TileEntity getBlockEntity()
     {
-        return new TileEntitySample();
+        return new Tileblackholechest();
     }
 
     public int idDropped(int i, Random random, int j)
@@ -85,13 +85,13 @@ public class BlockSample extends BlockContainer {
     public float getBlockBrightness(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {return 10.0F; }
 
     public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer) {
-        TileEntitySample abc = (TileEntitySample) world.getBlockTileEntity(i, j, k);
+        Tileblackholechest abc = (Tileblackholechest) world.getBlockTileEntity(i, j, k);
         if(abc == null)
         {
             return true;
         }
         else {
-            ModLoader.openGUI(entityplayer, new GuiSample(entityplayer.inventory, abc));
+            ModLoader.openGUI(entityplayer, new Guiblackholechest(entityplayer.inventory, abc));
             return true;
         }
     }

@@ -5,9 +5,9 @@ import net.minecraft.src.*;
 
 
 
-public class ContainerSample extends Container {
+public class Containerblackholechest extends Container {
 
-    private TileEntitySample chest;
+    private Tileblackholechest chest;
     private InventoryPlayer playerInventry;
 
     static final int inputslotSize = 1;
@@ -22,14 +22,14 @@ public class ContainerSample extends Container {
     static final int inventoryIndex = 3;
     static final int hotbarIndex = 30;
 
-    public ContainerSample(IInventory plaInv, IInventory tileInv) {
-        this.chest = (TileEntitySample) tileInv;
+    public Containerblackholechest(IInventory plaInv, IInventory tileInv) {
+        this.chest = (Tileblackholechest) tileInv;
         chest.setContainer(this);
         this.playerInventry = (InventoryPlayer) plaInv;
 
-        this.addSlot(new SlotSample(chest , 1, 8, 38,true,false));
-        this.addSlot(new SlotSample(chest , 2, 44, 38,false,true));
-        this.addSlot(new SlotSample(chest , 0, 124,35,false,false));
+        this.addSlot(new Slotblackholechest(chest , 1, 8, 38,true,false));
+        this.addSlot(new Slotblackholechest(chest , 2, 44, 38,false,true));
+        this.addSlot(new Slotblackholechest(chest , 0, 124,35,false,false));
         int var3;
 
         for (var3 = 0; var3 < 3; ++var3) {
@@ -43,11 +43,9 @@ public class ContainerSample extends Container {
         }
     }
 
-
     public boolean canInteractWith(EntityPlayer entityplayer) {
         return true;
     }
-
 
     public void onCraftGuiClosed(EntityPlayer entityplayer) {
         InventoryPlayer inventoryplayer = entityplayer.inventory;
@@ -57,30 +55,27 @@ public class ContainerSample extends Container {
         }
     }
 
-
     public ItemStack transferStackInSlot(int par1) {
+
         ItemStack var2 = null;
         Slot var3 = (Slot)this.inventorySlots.get(par1);
         Slot dis = (Slot)this.inventorySlots.get(displayslotIndex);
         ItemStack disItem = dis.getStack();
 
 
-
         if (var3 != null && var3.getHasStack()) {
+
             ItemStack var4 = var3.getStack();
             var2 = var4.copy();
 
             if (par1 == outputslotIndex){
-
                 if (chest.getSize() >= 64){
-
                     if (!this.mergeItemStack(var4, inventoryIndex, hotbarIndex + hotbarSize, false)) {
                         return null;
                     }
                     chest.setSize(chest.getSize() - 64);
                 }
                 else if (chest.getSize() < 63){
-
                     if (!this.mergeItemStack(var4, inventoryIndex, hotbarIndex + hotbarSize, false)) {
                         return null;
                     }
@@ -117,8 +112,7 @@ public class ContainerSample extends Container {
                 }
             }
             else if (par1 >= inventoryIndex && par1 < hotbarIndex) {
-                if (!this.mergeItemStack(var4, hotbarIndex, hotbarIndex + hotbarSize, false))
-                {
+                if (!this.mergeItemStack(var4, hotbarIndex, hotbarIndex + hotbarSize, false)) {
                     return null;
                 }
             }
@@ -145,12 +139,12 @@ public class ContainerSample extends Container {
     }
 }
 
-class SlotSample extends Slot {
+class Slotblackholechest extends Slot {
 
     private boolean in = false , out = false ;
 
 
-    public SlotSample(IInventory inventry, int index, int x, int y,boolean in,boolean out) {
+    public Slotblackholechest(IInventory inventry, int index, int x, int y, boolean in, boolean out) {
         super(inventry, index, x, y);
         this.in = in;
         this.out = out;
@@ -159,7 +153,7 @@ class SlotSample extends Slot {
     @Override
     public boolean isItemValid(ItemStack inStack) {
         if(this.in == true) {
-            TileEntitySample tile = (TileEntitySample) this.inventory;
+            Tileblackholechest tile = (Tileblackholechest) this.inventory;
             if(tile.getStackInSlot(0) == null) {
                 return true;
             }else if (tile.getStackInSlot(0).isItemEqual(inStack)){
@@ -171,7 +165,7 @@ class SlotSample extends Slot {
     }
 
     public int getSlotStackLimit() {
-        TileEntitySample tile = (TileEntitySample) this.inventory;
+        Tileblackholechest tile = (Tileblackholechest) this.inventory;
         long limit = tile.getMaxSize() - tile.getSize();
         return limit < 64 ? (int)limit : 64;
     }

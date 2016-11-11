@@ -3,9 +3,9 @@ package kojin15.src.Block;
 import net.minecraft.src.*;
 import net.minecraft.src.forge.ISidedInventory;
 
-public class TileEntitySample extends TileEntity implements IInventory, ISidedInventory {
+public class Tileblackholechest extends TileEntity implements IInventory, ISidedInventory {
 
-    private ContainerSample container;
+    private Containerblackholechest container;
 
     private long MAXSIZE =Long.MAX_VALUE;
 
@@ -14,7 +14,7 @@ public class TileEntitySample extends TileEntity implements IInventory, ISidedIn
     private ItemStack stack = null;
 
 
-    public void setContainer(ContainerSample container) {
+    public void setContainer(Containerblackholechest container) {
         this.container = container;
     }
 

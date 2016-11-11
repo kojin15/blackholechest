@@ -7,20 +7,22 @@ import net.minecraft.src.GuiContainer;
 import net.minecraft.src.IInventory;
 
 
-public class GuiSample extends GuiContainer {
+public class Guiblackholechest extends GuiContainer {
 
     private IInventory player;
-    private TileEntitySample tile;
+    private Tileblackholechest tile;
+
+    private static final char[] TEXTS = new char[]{'–œ', '‰­', '’›', '‹ž'};
 
     int button = 0;
 
     String ItemButtonText = null;
 
 
-    public GuiSample(InventoryPlayer inventoryplayer, TileEntitySample tileEntitySample) {
-        super(new ContainerSample(inventoryplayer, tileEntitySample));
+    public Guiblackholechest(InventoryPlayer inventoryplayer, Tileblackholechest tileblackholechest) {
+        super(new Containerblackholechest(inventoryplayer, tileblackholechest));
         player = inventoryplayer;
-        tile = (TileEntitySample) tileEntitySample;
+        tile = (Tileblackholechest) tileblackholechest;
         super.allowUserInput = false;
         super.xSize = 176;
         super.ySize = 166;
@@ -57,7 +59,30 @@ public class GuiSample extends GuiContainer {
             super.fontRenderer.drawString(name, 70, 18, 0x404040);
         }
         long ItemSize = this.tile.getSize();
-        if (button == 0){}
+
+        if (button == 0){
+            String valueStr = Long.toString(tile.getSize());
+
+            int strLength = valueStr.length();
+            int digits = strLength >> 2;
+            int rest = strLength - (digits << 2);
+
+            int[] ints = new int[digits + 1];
+            for (int i = 0; i < digits; i++) {
+                String s = valueStr.substring(strLength - (4 + (i << 2)), strLength - (i << 2));
+                ints[i] = Integer.valueOf(s);
+            }
+            if (rest > 0)
+                ints[ints.length - 1] = Integer.valueOf(valueStr.substring(0, rest));
+
+            StringBuffer buffer = new StringBuffer();
+            for (int i = ints.length - 1; i > 0; i--) {
+                if (ints[i] != 0) buffer.append(ints[i]).append(TEXTS[i - 1]);
+            }
+            if (ints[0] != 0) buffer.append(ints[0]);
+            String number = buffer+"ŒÂ";
+            super.fontRenderer.drawString(number, this.xSize-(35+((number.length()-2)*6)), 60, 4210752);
+        }
         if (button == 1){
             String Items = ItemSize+": Items";
             super.fontRenderer.drawString(Items, this.xSize-(35+((Items.length()-7)*6)), 60, 4210752);
@@ -76,9 +101,8 @@ public class GuiSample extends GuiContainer {
         }
     }
 
-
     protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3){
-        int tex = mc.renderEngine.getTexture("/kojin15/resourse/gui/samplecontainer.png");
+        int tex = mc.renderEngine.getTexture("/kojin15/resourse/gui/BHCcontainer.png");
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         mc.renderEngine.bindTexture(tex);
         int x = (width - xSize) / 2;
