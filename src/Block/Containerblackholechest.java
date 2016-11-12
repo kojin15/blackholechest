@@ -120,7 +120,6 @@ public class Containerblackholechest extends Container {
                 return null;
             }
             else if (par1 == displayslotIndex) {
-                chest.setSize(Long.MAX_VALUE);
                 return null;
             }
 

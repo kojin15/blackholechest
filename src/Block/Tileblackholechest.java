@@ -11,7 +11,7 @@ public class Tileblackholechest extends TileEntity implements IInventory, ISided
 
     private Containerblackholechest container;
 
-    private long MAXSIZE =Long.MAX_VALUE;
+    private long MAXSIZE = Long.MAX_VALUE;
 
     private long size = 0L;
 
