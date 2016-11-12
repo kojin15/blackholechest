@@ -1,6 +1,10 @@
 package kojin15.src.Block;
 
 import net.minecraft.src.*;
+import net.minecraft.src.buildcraft.api.IPowerReceptor;
+import net.minecraft.src.buildcraft.api.ISpecialInventory;
+import net.minecraft.src.buildcraft.api.Orientations;
+import net.minecraft.src.buildcraft.api.PowerProvider;
 import net.minecraft.src.forge.ISidedInventory;
 
 public class Tileblackholechest extends TileEntity implements IInventory, ISidedInventory {
@@ -170,8 +174,7 @@ public class Tileblackholechest extends TileEntity implements IInventory, ISided
         return 1;
     }
 
-    public int getSizeInventorySide(int side)
-    {
+    public int getSizeInventorySide(int side) {
         return side == 1 ? 1 : 2;
     }
 

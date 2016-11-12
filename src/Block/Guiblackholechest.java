@@ -30,7 +30,7 @@ public class Guiblackholechest extends GuiContainer {
 
     public void actionPerformed(GuiButton guibutton) {
         if (guibutton.id == 0) {
-            if (button != 4){
+            if (button != 5){
                 button++;
             }
             else {
@@ -45,6 +45,7 @@ public class Guiblackholechest extends GuiContainer {
         if (button == 2){ItemButtonText = "Stack";}
         if (button == 3){ItemButtonText = "LC";}
         if (button == 4){ItemButtonText = "MC";}
+        if (button == 5){ItemButtonText = "20BiC";}
         controlList.clear();
         GuiButton ItemButton = new GuiButton(0, (width - xSize) / 2 + 139, (height - ySize) / 2 + 70, 30, 12, ItemButtonText);
         controlList.add(ItemButton);
@@ -53,6 +54,9 @@ public class Guiblackholechest extends GuiContainer {
         super.fontRenderer.drawString("OUT", 44, 28, 0x000000);
         super.fontRenderer.drawString(st.translateKey(tile.getInvName()), 8, 5, 0x404040);
         super.fontRenderer.drawString(st.translateKey(player.getInvName()), 8, 72, 0x404040);
+        if (tile.getSize() == tile.getMaxSize()){
+            super.fontRenderer.drawString("MAX", 3, 60, 0xff0000);
+        }
         ItemStack item = this.tile.getStackInSlot(2);
         if (item != null) {
             String name = item.getItem().getItemDisplayName(item);
@@ -81,15 +85,15 @@ public class Guiblackholechest extends GuiContainer {
             }
             if (ints[0] != 0) buffer.append(ints[0]);
             String number = buffer+"ŒÂ";
-            super.fontRenderer.drawString(number, this.xSize-(35+((number.length()-2)*6)), 60, 4210752);
+            super.fontRenderer.drawString(number, this.xSize-(35+((number.length()-3)*6)), 60, 4210752);
         }
         if (button == 1){
             String Items = ItemSize+": Items";
-            super.fontRenderer.drawString(Items, this.xSize-(35+((Items.length()-7)*6)), 60, 4210752);
+            super.fontRenderer.drawString(Items, this.xSize-(35+((Items.length()-6)*6)), 60, 4210752);
         }
         if (button == 2){
             String Stack = (ItemSize/64)+": Stack";
-            super.fontRenderer.drawString(Stack, this.xSize-(35+((Stack.length()-7)*6)), 60, 4210752);
+            super.fontRenderer.drawString(Stack, this.xSize-(35+((Stack.length()-6)*6)), 60, 4210752);
         }
         if (button == 3){
             String Stack = (ItemSize/(6*9*64))+": LC";
@@ -98,6 +102,10 @@ public class Guiblackholechest extends GuiContainer {
         if (button == 4){
             String Stack = (ItemSize/(9*13*5*64))+": MC";
             super.fontRenderer.drawString(Stack, this.xSize-(35+((Stack.length()-4)*6)), 60, 4210752);
+        }
+        if (button == 5){
+            String Stack = (ItemSize/(2000000000))+": 20BiC";
+            super.fontRenderer.drawString(Stack, this.xSize-(35+((Stack.length()-6)*6)), 60, 4210752);
         }
     }
 
