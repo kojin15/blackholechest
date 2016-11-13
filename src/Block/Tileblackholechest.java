@@ -37,6 +37,16 @@ public class Tileblackholechest extends TileEntity implements IInventory, ISided
         par1NBTTagCompound.setTag("Item", compound);
     }
 
+    public NBTTagCompound writeToNBTOfItem(NBTTagCompound compound){
+        NBTTagCompound chestItemCompound = new NBTTagCompound();
+        chestItemCompound.setLong("Size", this.size);
+        NBTTagCompound compound1 = new NBTTagCompound();
+        if (this.stack != null) this.stack.writeToNBT(compound1);
+        chestItemCompound.setTag("Item", compound1);
+        compound.setTag("ChestItem", chestItemCompound);
+        return compound;
+    }
+
     public long getSize()
     {
         return  this.size;
@@ -47,6 +57,10 @@ public class Tileblackholechest extends TileEntity implements IInventory, ISided
         this.size = par1;
     }
 
+    public void setStack(ItemStack stack) {
+        this.stack = stack;
+    }
+
     public int getMetadata()
     {
         return this.worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
@@ -55,6 +69,13 @@ public class Tileblackholechest extends TileEntity implements IInventory, ISided
     public int getSizeInventory()
     {
         return 3;
+    }
+
+    public ItemStack getItemType() {
+        if (this.stack == null) return null;
+        ItemStack stack = this.stack.copy();
+        stack.stackSize = 0;
+        return stack;
     }
 
     public ItemStack getStackInSlot(int index) {

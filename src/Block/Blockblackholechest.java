@@ -1,5 +1,6 @@
 package kojin15.src.Block;
 
+import kojin15.src.Item.Itemblackholechest;
 import net.minecraft.src.*;
 import net.minecraft.src.BlockContainer;
 
@@ -9,6 +10,8 @@ import java.util.Random;
 public class Blockblackholechest extends BlockContainer {
 
     private boolean blockType;
+
+    private Tileblackholechest BHCTileEntity;
 
     public int getBlockTextureFromSideAndMetadata(int par1, int par2) {
         if (par1 == 1) {
@@ -30,9 +33,59 @@ public class Blockblackholechest extends BlockContainer {
         return par1 == 1 ? this.blockIndexInTexture : (par1 == 0 ? this.blockIndexInTexture : (par1 == 3 ? this.blockIndexInTexture + 1 + 16 : this.blockIndexInTexture + 16));
     }
 
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving) {
-        int var6 = MathHelper.floor_double((double)(par5EntityLiving.rotationYaw * 4.0F / 360.0F) + 2.5D) & 3;
-        par1World.setBlockMetadataWithNotify(par2, par3, par4, var6);
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving player) {
+
+        ItemStack stack = ((EntityPlayer)player).getCurrentEquippedItem();
+
+        if (stack.hasTagCompound()) {
+
+            Tileblackholechest tile = (Tileblackholechest) createNewTileEntity(world, 0);
+            int var6 = MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 2.5D) & 3;
+            world.setBlockMetadataWithNotify(x, y, z, var6);
+            world.setBlockTileEntity(x, y, z, tile);
+            NBTTagCompound compound = stack.getTagCompound().getCompoundTag("ChestItem");
+
+            if (compound != null) {
+
+                ItemStack cheststack = ItemStack.loadItemStackFromNBT(compound.getCompoundTag("Item"));
+                long size = compound.getLong("Size");
+                tile.setStack(cheststack);
+                tile.setSize(size);
+
+            }
+
+        }
+
+    }
+
+
+    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
+        return new Tileblackholechest();
+    }
+
+
+    public void onBlockRemoval(World world, int x, int y, int z)
+    {
+        BHCTileEntity = (Tileblackholechest) world.getBlockTileEntity(x, y, z);
+        super.onBlockRemoval(world, x, y, z);
+    }
+
+    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int meta)
+    {
+        if(BHCTileEntity != null)
+        {
+            ItemStack stack = new ItemStack(this, 1, BHCTileEntity.getMetadata());
+            if (BHCTileEntity.getItemType() != null) {
+                NBTTagCompound compound = new NBTTagCompound();
+                stack.setTagCompound(BHCTileEntity.writeToNBTOfItem(compound));
+            }
+            EntityItem drop = new EntityItem(world, (double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, stack);
+            drop.motionX = 0.0D;
+            drop.motionY = 0.20000000298023224D;
+            drop.motionZ = 0.0D;
+            world.spawnEntityInWorld(drop);
+        }
+        BHCTileEntity = null;
     }
 
     public Blockblackholechest(int par1, int par2, boolean par3) {
@@ -47,10 +100,6 @@ public class Blockblackholechest extends BlockContainer {
         return new Tileblackholechest();
     }
 
-    public int idDropped(int i, Random random, int j)
-    {
-        return this.blockID;
-    }
 
     public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
         float p0 = 0.01F;

@@ -75,7 +75,7 @@ public class Containerblackholechest extends Container {
                     }
                     chest.setSize(chest.getSize() - 64);
                 }
-                else if (chest.getSize() < 63){
+                else if (chest.getSize() < 64){
                     if (!this.mergeItemStack(var4, inventoryIndex, hotbarIndex + hotbarSize, false)) {
                         return null;
                     }
