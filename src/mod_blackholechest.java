@@ -19,10 +19,10 @@ public class mod_blackholechest extends BaseMod {
 
     public static Block BlackHoleChest;
     public static Item BlackholechestItem;
-
     public static String texture = "/kojin15/resourse/texture.png";
 
     private boolean isCE = false;
+    private int button = 0;
 
     private Tileblackholechest tile;
 
@@ -91,4 +91,22 @@ public class mod_blackholechest extends BaseMod {
         return JPnumber;
     }
 
+    public static String getButtonName(int par1){
+        String ItemButtonText = null;
+        switch (par1){
+            case 0:ItemButtonText = "å¬êî";
+                break;
+            case 1:ItemButtonText = "Items";
+                break;
+            case 2:ItemButtonText = "Stack";
+                break;
+            case 3:ItemButtonText = "LC";
+                break;
+            case 4:ItemButtonText = "MC";
+                break;
+            case 5:ItemButtonText = "20BiC";
+                break;
+        }
+        return ItemButtonText;
+    }
 }

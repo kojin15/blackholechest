@@ -8,9 +8,9 @@ import net.minecraft.src.forge.ISidedInventory;
 public class Tileblackholechest extends TileEntity implements IInventory, ISidedInventory {
 
     private Containerblackholechest container;
+    private Guiblackholechest GuiButton;
 
     private long MAXSIZE = Long.MAX_VALUE;
-
     private long size = 0L;
 
     private ItemStack stack = null;
@@ -23,6 +23,8 @@ public class Tileblackholechest extends TileEntity implements IInventory, ISided
     public void readFromNBT(NBTTagCompound par1NBTTagCompound) {
         super.readFromNBT(par1NBTTagCompound);
         this.size = par1NBTTagCompound.getLong("Size");
+        int buttonnum = par1NBTTagCompound.getInteger("Buttton");
+        GuiButton.setButtonNum(buttonnum);
         NBTTagCompound compound = par1NBTTagCompound.getCompoundTag("Item");
         this.stack = ItemStack.loadItemStackFromNBT(compound);
     }
@@ -30,6 +32,7 @@ public class Tileblackholechest extends TileEntity implements IInventory, ISided
     public void writeToNBT(NBTTagCompound par1NBTTagCompound) {
         super.writeToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setLong("Size", this.size);
+        par1NBTTagCompound.setInteger("Button", GuiButton.getButtonNum());
         NBTTagCompound compound = new NBTTagCompound();
         if(this.stack != null) this.stack.writeToNBT(compound);
         par1NBTTagCompound.setTag("Item", compound);
@@ -38,6 +41,7 @@ public class Tileblackholechest extends TileEntity implements IInventory, ISided
     public NBTTagCompound writeToNBTOfItem(NBTTagCompound compound){
         NBTTagCompound chestItemCompound = new NBTTagCompound();
         chestItemCompound.setLong("Size", this.size);
+        chestItemCompound.setInteger("Button", GuiButton.getButtonNum());
         NBTTagCompound compound1 = new NBTTagCompound();
         if (this.stack != null) this.stack.writeToNBT(compound1);
         chestItemCompound.setTag("Item", compound1);
@@ -181,11 +185,9 @@ public class Tileblackholechest extends TileEntity implements IInventory, ISided
     }
 
     public void openChest() {
-
     }
 
     public void closeChest() {
-
     }
 
     public int getStartInventorySide(int side)
