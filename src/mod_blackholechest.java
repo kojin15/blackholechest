@@ -15,10 +15,9 @@ import static net.minecraft.src.mod_CompactEngine.itemID_energyChecker;
 public class mod_blackholechest extends BaseMod {
 
     @MLProp(info="BHCblockID", min=125, max=4095)
-    public static int BHCblockID = 2000;
+    public static int BHCblockID = 2400;
 
     public static Block BlackHoleChest;
-    public static Item BlackholechestItem;
     public static String texture = "/kojin15/resourse/texture.png";
 
     private boolean isCE = false;

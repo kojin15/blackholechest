@@ -171,7 +171,7 @@ public class Tileblackholechest extends TileEntity implements IInventory, ISided
     }
 
     public String getInvName() {
-        return "container.samplechest";
+        return "ブラックホールチェスト";
     }
 
     public int getInventoryStackLimit()
