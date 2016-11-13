@@ -4,7 +4,6 @@ package kojin15.src.Block;
 import net.minecraft.src.*;
 
 
-
 public class Containerblackholechest extends Container {
 
     private Tileblackholechest chest;
@@ -23,6 +22,7 @@ public class Containerblackholechest extends Container {
     static final int hotbarIndex = 30;
 
     public Containerblackholechest(IInventory plaInv, IInventory tileInv) {
+
         this.chest = (Tileblackholechest) tileInv;
         chest.setContainer(this);
         this.playerInventry = (InventoryPlayer) plaInv;
@@ -62,7 +62,6 @@ public class Containerblackholechest extends Container {
         Slot dis = (Slot)this.inventorySlots.get(displayslotIndex);
         ItemStack disItem = dis.getStack();
 
-
         if (var3 != null && var3.getHasStack()) {
 
             ItemStack var4 = var3.getStack();
@@ -75,6 +74,7 @@ public class Containerblackholechest extends Container {
                     }
                     chest.setSize(chest.getSize() - 64);
                 }
+
                 else if (chest.getSize() < 64){
                     if (!this.mergeItemStack(var4, inventoryIndex, hotbarIndex + hotbarSize, false)) {
                         return null;
@@ -90,8 +90,10 @@ public class Containerblackholechest extends Container {
                                 return null;
                         }
                     }
+
                     else if (var4.isItemEqual(disItem)){
                         if (chest.getMaxSize() - chest.getSize() < (long)var4.stackSize) {
+
                             long var5 = chest.getMaxSize() - chest.getSize();
                             ItemStack var6 = var4.copy();
                             ItemStack var7 = var4.copy();
@@ -103,6 +105,7 @@ public class Containerblackholechest extends Container {
                             }
                             var3.putStack(var7);
                         }
+
                         else {
                             if (!this.mergeItemStack(var4, inputslotIndex, inputslotIndex + inputslotSize, false)) {
                                 return null;
@@ -116,9 +119,12 @@ public class Containerblackholechest extends Container {
                     return null;
                 }
             }
-            else if (par1 >= hotbarIndex && par1 < hotbarIndex +hotbarSize && !this.mergeItemStack(var4, inventoryIndex, hotbarIndex, false)) {
+
+            else if (par1 >= hotbarIndex && par1 < hotbarIndex +hotbarSize) {
+                if (!this.mergeItemStack(var4, inventoryIndex, hotbarIndex, false))
                 return null;
             }
+
             else if (par1 == displayslotIndex) {
                 return null;
             }
@@ -126,6 +132,7 @@ public class Containerblackholechest extends Container {
             if (var4.stackSize == 0) {
                 var3.putStack((ItemStack)null);
             }
+
             else {
                 var3.onSlotChanged();
             }
@@ -142,7 +149,6 @@ public class Containerblackholechest extends Container {
 class Slotblackholechest extends Slot {
 
     private boolean in = false , out = false ;
-
 
     public Slotblackholechest(IInventory inventry, int index, int x, int y, boolean in, boolean out) {
         super(inventry, index, x, y);

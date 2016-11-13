@@ -1,11 +1,11 @@
 package kojin15.src.Block;
 
-import kojin15.src.Item.Itemblackholechest;
+
 import net.minecraft.src.*;
 import net.minecraft.src.BlockContainer;
-
 import java.util.ArrayList;
 import java.util.Random;
+
 
 public class Blockblackholechest extends BlockContainer {
 
@@ -58,11 +58,9 @@ public class Blockblackholechest extends BlockContainer {
 
     }
 
-
     public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
         return new Tileblackholechest();
     }
-
 
     public void onBlockRemoval(World world, int x, int y, int z)
     {
@@ -99,7 +97,6 @@ public class Blockblackholechest extends BlockContainer {
     {
         return new Tileblackholechest();
     }
-
 
     public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
         float p0 = 0.01F;

@@ -1,11 +1,9 @@
 package kojin15.src.Block;
 
+
 import net.minecraft.src.*;
-import net.minecraft.src.buildcraft.api.IPowerReceptor;
-import net.minecraft.src.buildcraft.api.ISpecialInventory;
-import net.minecraft.src.buildcraft.api.Orientations;
-import net.minecraft.src.buildcraft.api.PowerProvider;
 import net.minecraft.src.forge.ISidedInventory;
+
 
 public class Tileblackholechest extends TileEntity implements IInventory, ISidedInventory {
 
