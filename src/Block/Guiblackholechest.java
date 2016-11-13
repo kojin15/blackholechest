@@ -1,6 +1,7 @@
 package kojin15.src.Block;
 
 
+import kojin15.src.mod_blackholechest;
 import org.lwjgl.opengl.GL11;
 import net.minecraft.src.*;
 import net.minecraft.src.ItemStack;
@@ -12,8 +13,7 @@ public class Guiblackholechest extends GuiContainer {
 
     private IInventory player;
     private Tileblackholechest tile;
-
-    private static final char[] TEXTS = new char[]{'–œ', '‰­', '’›', '‹ž'};
+    private mod_blackholechest core;
 
     int button = 0;
 
@@ -66,26 +66,7 @@ public class Guiblackholechest extends GuiContainer {
         long ItemSize = this.tile.getSize();
 
         if (button == 0){
-            String valueStr = Long.toString(tile.getSize());
-
-            int strLength = valueStr.length();
-            int digits = strLength >> 2;
-            int rest = strLength - (digits << 2);
-
-            int[] ints = new int[digits + 1];
-            for (int i = 0; i < digits; i++) {
-                String s = valueStr.substring(strLength - (4 + (i << 2)), strLength - (i << 2));
-                ints[i] = Integer.valueOf(s);
-            }
-            if (rest > 0)
-                ints[ints.length - 1] = Integer.valueOf(valueStr.substring(0, rest));
-
-            StringBuffer buffer = new StringBuffer();
-            for (int i = ints.length - 1; i > 0; i--) {
-                if (ints[i] != 0) buffer.append(ints[i]).append(TEXTS[i - 1]);
-            }
-            if (ints[0] != 0) buffer.append(ints[0]);
-            String number = buffer+"ŒÂ";
+            String number = core.getJPnumber(ItemSize);
             super.fontRenderer.drawString(number, this.xSize-(35+((number.length()-3)*6)), 60, 4210752);
         }
         if (button == 1){

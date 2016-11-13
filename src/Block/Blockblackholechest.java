@@ -13,6 +13,13 @@ public class Blockblackholechest extends BlockContainer {
 
     private Tileblackholechest BHCTileEntity;
 
+    public Blockblackholechest(int par1, int par2, boolean par3) {
+        super(par1, 0, Material.glass);
+        Block.useNeighborBrightness[par1] = true;
+        this.blockIndexInTexture = par2;
+        this.blockType = par3;
+    }
+
     public int getBlockTextureFromSideAndMetadata(int par1, int par2) {
         if (par1 == 1) {
             return this.blockIndexInTexture;
@@ -51,11 +58,16 @@ public class Blockblackholechest extends BlockContainer {
                 long size = compound.getLong("Size");
                 tile.setStack(cheststack);
                 tile.setSize(size);
-
             }
-
         }
 
+        else {
+
+            Tileblackholechest tile = (Tileblackholechest) createNewTileEntity(world, 0);
+            int var6 = MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 2.5D) & 3;
+            world.setBlockMetadataWithNotify(x, y, z, var6);
+            world.setBlockTileEntity(x, y, z, tile);
+        }
     }
 
     public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
@@ -86,13 +98,6 @@ public class Blockblackholechest extends BlockContainer {
         BHCTileEntity = null;
     }
 
-    public Blockblackholechest(int par1, int par2, boolean par3) {
-        super(par1, 0, Material.glass);
-        Block.useNeighborBrightness[par1] = true;
-        this.blockIndexInTexture = par2;
-        this.blockType = par3;
-    }
-
     public TileEntity getBlockEntity()
     {
         return new Tileblackholechest();
@@ -108,7 +113,7 @@ public class Blockblackholechest extends BlockContainer {
 
     public int quantityDropped(Random random)
     {
-        return 1;
+        return 0;
     }
 
     public boolean isOpaqueCube()

@@ -24,6 +24,10 @@ public class mod_blackholechest extends BaseMod {
 
     private boolean isCE = false;
 
+    private Tileblackholechest tile;
+
+    private static final char[] TEXTS = new char[]{'–œ', '‰­', '’›', '‹'};
+
     public String getVersion()
     {
         return "1_2_5_01";
@@ -59,6 +63,32 @@ public class mod_blackholechest extends BaseMod {
             ModLoader.addRecipe(new ItemStack(BlackHoleChest), "ABA", "BCB", "ABA", 'A', Block.chest, 'B', Block.glass, 'C', Block.blockDiamond);
 
         }
+    }
+
+    public static String getJPnumber(long size){
+
+        String valueStr = Long.toString(size);
+
+        int strLength = valueStr.length();
+        int digits = strLength >> 2;
+        int rest = strLength - (digits << 2);
+
+        int[] ints = new int[digits + 1];
+        for (int i = 0; i < digits; i++) {
+            String s = valueStr.substring(strLength - (4 + (i << 2)), strLength - (i << 2));
+            ints[i] = Integer.valueOf(s);
+        }
+        if (rest > 0)
+            ints[ints.length - 1] = Integer.valueOf(valueStr.substring(0, rest));
+
+        StringBuffer buffer = new StringBuffer();
+        for (int i = ints.length - 1; i > 0; i--) {
+            if (ints[i] != 0) buffer.append(ints[i]).append(TEXTS[i - 1]);
+        }
+        if (ints[0] != 0) buffer.append(ints[0]);
+
+        String JPnumber = buffer + "ŒÂ";
+        return JPnumber;
     }
 
 }
